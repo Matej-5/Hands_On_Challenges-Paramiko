@@ -96,10 +96,10 @@ import paramiko
 import time
 
 
-def connect (server_ip, server_port, password):
+def connect (server_ip, server_port, user, passwd):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(hostname='10.1.1.10', port= '22', username='u1', password='cisco', look_for_keys=False, allow_agent=False)
+    ssh_client.connect(hostname=server_ip, port=server_port, username=user, password=passwd, look_for_keys=False, allow_agent=False)
 
     return ssh_client
 
@@ -108,7 +108,7 @@ def get_shell (ssh_client):
     return shell
 
 def send_command(shell, command, timeout=1):
-    shell.send(command '\n')
+    shell.send(command + '\n')
     time.sleep(timeout)
 
 def show(shell, n=10000):
@@ -120,8 +120,8 @@ def close(ssh_client):
         ssh_client.close()
 
 if __name__ == '__main__':
-    router1 = {'server_ip': '10.1.1.10', 'server_port': '22', 'user':'u1', 'passwd':'cisco'}
-    client = connect(**router1)
+    router1 = {'server_ip': '10.1.1.10', 'server_port': '22', 'user': 'u1', 'passwd':'cisco'}
+    client = connect (**router1)
     shell = get_shell(client)
 
     send_command(shell, 'enable')
