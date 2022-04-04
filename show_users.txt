@@ -1,0 +1,9 @@
+
+CiscoRouter1>show users
+    Line       User       Host(s)              Idle       Location
+   0 con 0                idle                 00:07:33   
+*  2 vty 0     u1         idle                 00:00:00 10.1.1.2
+
+  Interface    User               Mode         Idle     Peer Address
+
+CiscoRouter1>
