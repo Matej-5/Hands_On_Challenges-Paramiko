@@ -63,32 +63,64 @@
 #     print('Closing connection')
 #     ssh_client.close()
 
+# import paramiko
+# import time
+#
+#
+# ssh_client = paramiko.SSHClient()
+# ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+#
+# ssh_client.connect(hostname='10.1.1.10', port='22', username='u1', password='cisco',
+#                    look_for_keys=False, allow_agent=False)
+#
+# shell = ssh_client.invoke_shell()
+#
+# commands = ['enable', 'cisco', 'conf t', 'username admin1 secret cisco', 'access-list 1 permit any', 'end',
+#             'terminal length 0',  'sh run | i user']
+#
+# for cmd in commands:
+#     shell.send(f'{cmd}\n')
+#     time.sleep(0.5)
+#
+# output = shell.recv(100000)
+# output = output.decode()
+# print(output)
+#
+#
+# if ssh_client.get_transport().is_active():
+#     ssh_client.close()
+
+
+
 import paramiko
 import time
 
 
-ssh_client = paramiko.SSHClient()
-ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+def connect (server_ip, server_port, password):
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect(hostname='10.1.1.10', port= '22', username='u1', password='cisco', look_for_keys=False, allow_agent=False)
 
-ssh_client.connect(hostname='10.1.1.10', port='22', username='u1', password='cisco',
-                   look_for_keys=False, allow_agent=False)
+    return ssh_client
 
-shell = ssh_client.invoke_shell()
+def get_shell (ssh_client):
+    shell = ssh_client.invoke_shell()
+    return shell
 
-commands = ['enable', 'cisco', 'conf t', 'username admin1 secret cisco', 'access-list 1 permit any', 'end',
-            'terminal length 0',  'sh run | i user']
+def send_command(shell, command, timeout=1):
+    shell.send(command '\n')
+    time.sleep(timeout)
 
-for cmd in commands:
-    shell.send(f'{cmd}\n')
-    time.sleep(0.5)
+def show(shell, n=10000):
+    output = shell.recv(n)
+    return output.decode()
 
-output = shell.recv(100000)
-output = output.decode()
-print(output)
+def close(ssh_client):
+    if ssh_client.get_transport().is_active() == True:
+        ssh_client.close()
 
 
-if ssh_client.get_transport().is_active():
-    ssh_client.close()
+
 
 
 
