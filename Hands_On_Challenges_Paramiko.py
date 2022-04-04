@@ -8,3 +8,8 @@ cisco_device = {
     'port': '22',
     'verbose': True
 }
+
+connection = ConnectHandler(**cisco_device)
+output = connection.send_command('show arp')
+print(output)
+
