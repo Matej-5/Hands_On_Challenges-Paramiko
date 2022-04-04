@@ -8,4 +8,11 @@ Internet  100.0.0.1               -   aabb.cc00.0110  ARPA   Ethernet0/1
 
 Process finished with exit code 0
 
+Connecting to client
+    Line       User       Host(s)              Idle       Location
+*  0 con 0                idle                 00:00:00
+   2 vty 0     u1         idle                 00:00:18 10.1.1.2
 
+  Interface    User               Mode         Idle     Peer Address
+
+Process finished with exit code 0
