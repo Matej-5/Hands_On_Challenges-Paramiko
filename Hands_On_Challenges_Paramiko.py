@@ -78,7 +78,17 @@ shell = ssh_client.invoke_shell()
 commands = ['enable', 'cisco', 'conf t', 'username admin1 secret cisco', 'access-list 1 permit any', 'end',
             'terminal length 0',  'sh run | i user']
 
+for cmd in commands:
+    shell.send(f'{cmd}\n')
+    time.sleep(0.5)
 
+output = shell.recv(100000)
+output = output.decode()
+print(output)
+
+
+if ssh_client.get_transport().is_active():
+    ssh_client.close()
 
 
 
